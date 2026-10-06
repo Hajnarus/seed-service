@@ -1,4 +1,5 @@
 import psycopg
+
 from fastapi import FastAPI
 
 from config import settings
@@ -13,11 +14,12 @@ def read_root():
 
 @app.get("/health")
 def health_check():
-    return {"status": "ok"}
+    return {"status": "ok", "version": "1.1.0"}
 
 
 @app.get("/db-check")
 def db_check():
     with psycopg.connect(settings.database_url) as conn:
         conn.execute("SELECT 1")
+
     return {"status_db": "ok"}
